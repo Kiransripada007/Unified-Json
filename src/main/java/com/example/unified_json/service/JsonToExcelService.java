@@ -24,7 +24,7 @@ public class JsonToExcelService {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("UnifiedData");
 
-        // Step 1: Collect all unique headers from all sheets
+        // Collect all unique headers from all sheets
         Set<String> allHeaders = new LinkedHashSet<>();
         for (Map<String, Object> sheetData : sheetsData) {
             List<Map<String, Object>> rowsData = (List<Map<String, Object>>) sheetData.get("data");
@@ -34,7 +34,7 @@ public class JsonToExcelService {
             }
         }
 
-        // Step 2: Create the header row in the Excel sheet
+        // Create the header row in the Unified Excel sheet
         Row headerRow = sheet.createRow(0);
         int colIndex = 0;
         Map<String, Integer> headerColumnIndexMap = new HashMap<>();
@@ -44,7 +44,7 @@ public class JsonToExcelService {
             cell.setCellValue(header);
         }
 
-        // Step 3: Write data rows below the header
+        // Write data rows below the header
         int rowIndex = 1;  // Start inserting data from the second row
         for (Map<String, Object> sheetData : sheetsData) {
             List<Map<String, Object>> rowsData = (List<Map<String, Object>>) sheetData.get("data");
@@ -80,7 +80,7 @@ public class JsonToExcelService {
             }
         }
 
-        // Step 4: Write the Excel file to the specified output path
+        //Output path
         try (FileOutputStream fileOut = new FileOutputStream(new File(outputExcelFilePath))) {
             workbook.write(fileOut);
         }
