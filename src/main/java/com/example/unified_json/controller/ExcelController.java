@@ -44,29 +44,4 @@ public class ExcelController {
             return ResponseEntity.status(500).body("Error processing file: " + e.getMessage());
         }
     }
-
-    // Optional: Method for downloading the generated files
-    @GetMapping("/get/{fileType}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileType) {
-        try {
-            Path path;
-            if ("json".equalsIgnoreCase(fileType)) {
-                path = Paths.get("src/main/resources/output.json");
-            } else if ("excel".equalsIgnoreCase(fileType)) {
-                path = Paths.get("src/main/resources/output.xlsx");
-            } else {
-                return ResponseEntity.badRequest().body(null);
-            }
-
-            File file = path.toFile();
-            byte[] fileContent = Files.readAllBytes(path);
-
-            return ResponseEntity.ok()
-                    .header("Content-Disposition", "attachment; filename=" + file.getName())
-                    .body(fileContent);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(null);
-        }
-    }
 }
